@@ -1,4 +1,4 @@
-# import cv2
+import cv2
 from ultralytics import YOLO
 import streamlit as st
 from pathlib import Path
@@ -41,29 +41,29 @@ def display_tracker_options():
 
 def analysis_video(video_path, conf):
     model = YOLO(model_path)
-    # vid_cap = cv2.VideoCapture(video_path)
-    # st_frame= st.empty()
-    # is_display_tracker, tracker = display_tracker_options()
-    # while (vid_cap.isOpened()):
-    #     success, image = vid_cap.read()
-    #     if success:
-    #         image = cv2.resize(image, (720, int(720 * (9 / 16))))
-    #         # Display object tracking, if specified
-    #         if is_display_tracker:
-    #             res = model.track(image, conf=conf, persist=True, tracker=tracker)
-    #         else:
-    #             # Predict the objects in the image using the YOLOv8 model
-    #             res = model.predict(image, conf=conf)
-    #
-    #         # # Plot the detected objects on the video frame
-    #         res_plotted = res[0].plot()
-    #         st_frame.image(res_plotted,
-    #                        caption='Detected Video',
-    #                        channels="BGR",
-    #                        use_container_width=True
-    #                        )
-    #     else:
-    #         vid_cap.release()
-    #         break
+    vid_cap = cv2.VideoCapture(video_path)
+    st_frame= st.empty()
+    is_display_tracker, tracker = display_tracker_options()
+    while (vid_cap.isOpened()):
+        success, image = vid_cap.read()
+        if success:
+            image = cv2.resize(image, (720, int(720 * (9 / 16))))
+            # Display object tracking, if specified
+            if is_display_tracker:
+                res = model.track(image, conf=conf, persist=True, tracker=tracker)
+            else:
+                # Predict the objects in the image using the YOLOv8 model
+                res = model.predict(image, conf=conf)
+
+            # # Plot the detected objects on the video frame
+            res_plotted = res[0].plot()
+            st_frame.image(res_plotted,
+                           caption='Detected Video',
+                           channels="BGR",
+                           use_container_width=True
+                           )
+        else:
+            vid_cap.release()
+            break
 if __name__ == '__main__':
     analysis_video(VIDEOS_DICT.get(source_vid), confidence)
