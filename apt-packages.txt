@@ -1,2 +1,6 @@
 libgl1-mesa-glx
 libglib2.0-0
+pkg-config
+libcairo2-dev
+libgirepository1.0-dev
+python3-dev
